@@ -46,6 +46,7 @@
 
 
 <!-- 打包插件 -->
+<!-- 打包命令：java -jar young-security -->
     <build>
         <plugins>
             <plugin>

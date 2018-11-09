@@ -6,7 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="young-security" />
+        <module name="young-security-app" />
+        <module name="young-security-browser" />
+        <module name="young-security-core" />
+        <module name="young-security-demo" />
       </profile>
     </annotationProcessing>
   </component>

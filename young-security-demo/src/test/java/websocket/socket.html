@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Socket客户端</title>
+	<script type="text/javascript">
+		var socket ;
+		if( !window.WebSocket){
+			window.WebSocket = window.MozWebSocket;
+		}
+		if( window.WebSocket){
+			socket = new WebSocket("ws://localhost:8888/websocket");
+			socket.onmessage = function(event){
+				var ta = document.getElementById("responseConent");
+				ta.value += event.data + "\r\n";
+			};
+			socket.onopen = function(event){
+				var ta = document.getElementById("responseConent");
+				ta.value = "你当前的浏览器支持WebSocket,请进行后续操作\r\n";
+			};
+			socket.onoclose = function(event){
+				var ta = document.getElementById("responseConent");	
+				ta.value = "";
+				ta.value = "WebSocket 连接已经关闭\r\n"	;
+			};
+		}else{
+			alert("您的流浪器不支持WebSocket");
+		}
+
+		function send(message){
+			if( !window.WebSocket){
+				return;
+			}
+			if( socket.readyState == WebSocket.OPEN){
+				socket.send(message);
+			}else{
+				alert("WebSocket没有建立连接");
+			}
+		}
+	</script>
+</head>
+<body>
+	<form onsubmit="return false;">
+		<input type="text" name="message" value=""/>
+		<br>
+		<button onclick="send(this.form.message.value);" style="margin-top: 3px;" value="发送WebSocket消息">发送WebSocket消息</button>
+		<hr style="color: red;">
+		<h2>客户端接收到服务端返回的应答消息</h2>
+		<textarea id="responseConent" style="width: 1024px;height: 300px;">
+			
+		</textarea>
+	</form>
+</body>
+</html>

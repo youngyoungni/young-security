@@ -1,0 +1,25 @@
+## JDBC 配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/young-security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+  session:
+    store-type: none
+  ## 热部署
+  devtools:
+    restart:
+      enabled: true
+## 端口配置
+server:
+  port: 888
+## 是否启动 security 登录
+security:
+  basic:
+    enabled: false
+
+
+
+
+

@@ -10,14 +10,14 @@ spring:
   ## 热部署
   devtools:
     restart:
-      enabled: true
+      enabled: false
 ## 端口配置
 server:
   port: 888
 ## 是否启动 security 登录
 security:
   basic:
-    enabled: false
+    enabled: true
 
 
 

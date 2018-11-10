@@ -19,7 +19,9 @@ security:
   basic:
     enabled: true
 
-
-
-
-
+## 自定义 young.security 配置项
+young:
+  security:
+    browser:
+      loginPage: /young-singIn.html
+      loginType: REDIRECT

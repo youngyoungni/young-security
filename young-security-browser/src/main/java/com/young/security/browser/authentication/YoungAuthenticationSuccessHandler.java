@@ -17,8 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Youngni
- */
+* @Description:   验证成功类
+* @Author:         YoungNi
+* @CreateDate:     2018/11/12 16:35
+* @UpdateDate:     2018/11/12 16:35
+* @implNote  
+* @UpdateRemark:   修改内容
+* @Version:        1.0
+*/
 @Component("youngAuthenticationSuccessHandler")
 public class YoungAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 

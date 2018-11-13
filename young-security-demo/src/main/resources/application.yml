@@ -27,6 +27,6 @@ young:
       loginType: JSON
     code:
       image:
-        length: 6
+        length: 5
         width: 100
-        url: /hello,/hello/*
+        url: /hello/*

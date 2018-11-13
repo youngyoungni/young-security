@@ -4,6 +4,7 @@ import com.young.security.core.properties.SecurityProperties;
 import com.young.security.core.validate.code.controller.ValidateCodeController;
 import com.young.security.core.validate.code.exception.ValidateCodeException;
 import com.young.security.core.validate.code.model.ImageCode;
+import com.young.security.core.validate.code.model.ValidateCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -25,7 +26,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
-* @Description:    图形验证码的过滤器，每次请求都会过滤
+* @Description:    短信验证码的过滤器，每次请求都会过滤
 * @Author:         YoungNi
 * @CreateDate:     2018/11/12 16:05
 * @UpdateDate:     2018/11/12 16:05
@@ -33,7 +34,7 @@ import java.util.Set;
 * @UpdateRemark:   implements InitializingBean:等其他组件初始化完基本数据，再来初始化“urls”
 * @Version:        1.0
 */
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+public class SmsCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
     private AuthenticationFailureHandler youngAuthenticationFailureHandler;
@@ -56,7 +57,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
         String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(
-                securityProperties.getCode().getImage().getUrl(),
+                securityProperties.getCode().getSms().getUrl(),
                 ","
         );
         /*
@@ -65,15 +66,15 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         for (String url: configUrls) {
             urls.add(url);
         }
-        urls.add("/authentication/form");
+        urls.add("/authentication/mobile");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request
                         , HttpServletResponse response
                         , FilterChain filterChain) throws ServletException, IOException {
-        String loginUrl = "/authentication/form";
-        boolean action = false;
+
+        boolean actions = false;
         /*
             对需要验证码过滤的请求，进行筛选
          */
@@ -81,10 +82,10 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             System.out.println(url);
             // 如果配置的 url 能和 正在请求的url 对上，表明需要验证码过滤
             if ( pathMatcher.match(url, request.getRequestURI())){
-                action = true;
+                actions = true;
             }
         }
-        if(action){
+        if(actions){
             try{
                 validateCode(new ServletWebRequest(request));
             }catch (ValidateCodeException e){
@@ -106,8 +107,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
          * 2.取得生成验证码中存在session的 验证码值
          */
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest()
-                ,"imageCode");
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request
+                ,"smsCode");
+        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(request
                 ,ValidateCodeController.SESSION_KEY);
 
         /**

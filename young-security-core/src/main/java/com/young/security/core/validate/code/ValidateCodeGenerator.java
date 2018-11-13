@@ -1,6 +1,6 @@
 package com.young.security.core.validate.code;
 
-import com.young.security.core.validate.code.model.ImageCode;
+import com.young.security.core.validate.code.model.ValidateCode;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
@@ -15,9 +15,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 public interface ValidateCodeGenerator {
 
     /**
-     * 生成图形验证码
+     * 生成验证码
      * @param request   ：包装了 request/response
      * @return          ：
      */
-    ImageCode generate(ServletWebRequest request);
+    ValidateCode generate(ServletWebRequest request);
 }

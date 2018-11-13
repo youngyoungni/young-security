@@ -2,7 +2,6 @@ package com.young.code;
 
 import com.young.security.core.validate.code.ValidateCodeGenerator;
 import com.young.security.core.validate.code.model.ImageCode;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 /**
 * @Description:   测试：@Component("imageCodeGenerator")

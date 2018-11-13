@@ -5,7 +5,7 @@
     <title>Browser</title>
 </head>
 <body>
-    <h2> Browser 登录页</h2>
+    <h2> Browser（图形验证码）登录页</h2>
     <form action="/authentication/form" method="POST">
         <table>
             <tr>
@@ -20,7 +20,31 @@
                 <td>图形验证码:</td>
                 <td>
                     <input type="text" name="imageCode">
-                    <img id="image" src="/code/image?width=200" onclick="getImageCode(this)">
+                    <img id="image" src="/code/image?width=150" onclick="getImageCode(this)">
+                </td>
+            </tr>
+            <tr>
+                <!-- name="remember-me" 固定-->
+                <td colspan="2"><input name="remember-me" type="checkbox" value="true">记住我</input></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">登录</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <h2> Browser（短信验证码）登录页</h2>
+    <form action="/authentication/mobile" method="POST">
+        <table>
+            <tr>
+                <td>手机号:</td>
+                <td><input type="text" name="mobile" value="13015986542"></td>
+            </tr>
+            <tr>
+                <td>短信验证码:</td>
+                <td>
+                    <input type="text" name="smsCode">
+                    <a href="/code/sms?mobile=13015986542">发送验证码</a>
                 </td>
             </tr>
             <tr>

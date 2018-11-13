@@ -3,6 +3,9 @@ package com.young.security.core.validate.code.config;
 import com.young.security.core.properties.SecurityProperties;
 import com.young.security.core.validate.code.ValidateCodeGenerator;
 import com.young.security.core.validate.code.impl.ImageCodeGenerator;
+import com.young.security.core.validate.code.impl.SmsCodeGenerator;
+import com.young.security.core.validate.code.sms.SmsCodeSender;
+import com.young.security.core.validate.code.sms.impl.DefaultSmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +38,25 @@ public class ValidateCodeBeanConfig {
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "smsCodeGenerator")
+    public ValidateCodeGenerator smsCodeGenerator(){
+        SmsCodeGenerator smsCodeGenerator = new SmsCodeGenerator();
+        smsCodeGenerator.setSecurityProperties(securityProperties);
+        return smsCodeGenerator;
+    }
+
+    /**
+     *  首先会在应用中找 “SmsCodeSender.class”类的实现
+     *  如果没有就“new DefaultSmsCodeSender()”
+     *  @return  :   DefaultSmsCodeSender
+     */
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender(){
+        return new DefaultSmsCodeSender();
     }
 
 }
